@@ -50,6 +50,9 @@ def parallel_transcription(file_path, segment_duration=60000, output_file="trans
 
 
 if __name__ == "__main__":
+    if "OPENAI_API_KEY" not in os.environ:
+        print("Please set OPENAI_API_KEY environment variable.")
+        exit(1)
     parser = argparse.ArgumentParser()
     parser.add_argument("wav_source_path", help="path to wav file source")
     parser.add_argument("transcription_file_name",
