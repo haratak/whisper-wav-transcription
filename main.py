@@ -42,7 +42,7 @@ def parallel_transcription(file_path, segment_duration=60000, output_file="trans
         transcriptions = list(executor.map(transcribe_audio_file, [
                               file_path] * num_segments, start_times, end_times))
 
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         for transcription in transcriptions:
             f.write(transcription + "\n")
 
