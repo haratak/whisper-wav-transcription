@@ -19,13 +19,15 @@ def transcribe_audio_file(file_path, start_time, end_time):
     sliced_file_name = f"sliced_{start_time}_{end_time}.wav"
     sliced_audio.export(sliced_file_name, format="wav")
 
-    with open(sliced_file_name, "rb") as f:
-        response = openai.Audio.transcribe(
-            "whisper-1",
-            file=f,
-            response_format="text"
-        )
-    os.remove(sliced_file_name)
+    try:
+        with open(sliced_file_name, "rb") as f:
+            response = openai.Audio.transcribe(
+                "whisper-1",
+                file=f,
+                response_format="text"
+            )
+    finally:
+        os.remove(sliced_file_name)
     return response
 
 
@@ -56,5 +58,4 @@ if __name__ == "__main__":
 
     input_file = args.wav_source_path
     output_file = args.transcription_file_name
-
     parallel_transcription(input_file, output_file=output_file)
